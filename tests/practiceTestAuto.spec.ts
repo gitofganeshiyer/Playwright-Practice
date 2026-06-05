@@ -28,6 +28,7 @@ test.describe('Practice Test Automation - End to End Flow', () => {
           const firstBlogTitleLocator = page.locator(
             'article h1, article h2, article h3, .entry-title, .post-title'
           ).first();
+          
           const firstBlogTitle = (await firstBlogTitleLocator.textContent())?.trim();
           expect(firstBlogTitle).not.toBeNull();
           expect(firstBlogTitle?.length).toBeGreaterThan(0);
@@ -63,8 +64,7 @@ test.describe('Practice Test Automation - End to End Flow', () => {
         // 5. Click on Home menu link and check if the header text is Hello
         test.step("step5 : Validate home header", async () => {
           await page.getByRole('link', { name: 'Home' }).click();
-          await expect(page.locator('h1')).toHaveText(/Hello/i);
-      
+          await expect(page.locator('h1')).toHaveText(/Hello/i);      
           await testInfo.attach('step-5-home-header', {
             body: await page.screenshot(),
             contentType: 'image/png',
