@@ -13,6 +13,7 @@ export class RestaurantMenuPage extends BasePage {
   readonly menuRows = 'table tr';
   readonly validationMessage = 'p';
   readonly searchMenuItemInput = '#search-box';
+  readonly resetMenuItem = "#reset-btn";
 
   constructor(page: Page) {
     super(page);
