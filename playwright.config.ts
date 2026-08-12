@@ -23,6 +23,7 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'https://opensource-demo.orangehrmlive.com',
+    headless: true,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
@@ -32,14 +33,20 @@ export default defineConfig({
 
     /* Video on failure */
     video: 'off',
+    
   },
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'chromium',     
-      use: { ...devices['Desktop Chrome'] },
-    },
+     {
+      name: 'chromium',
+      use: { 
+        ...devices['Desktop Chrome'],
+        // RECOMMENDED: Opt into full Chrome engine headless mode 
+        // to minimize rendering differences (fonts, WebGL) vs headed mode
+        channel: 'chromium', 
+      },
+    },    
 
     {
       name: 'firefox',
