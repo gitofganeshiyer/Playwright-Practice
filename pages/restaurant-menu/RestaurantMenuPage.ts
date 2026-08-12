@@ -1,8 +1,10 @@
 import { Page, expect } from '@playwright/test';
 import { BasePage } from '../BasePage';
 
+
 export class RestaurantMenuPage extends BasePage {
-  readonly appUrl = 'http://127.0.0.1:5000/';
+  readonly appUrl = process.env.restaurant_app_url || 'http://127.0.0.1:5000/';
+
   readonly pageHeading = 'h1';
   readonly nameInput = '#add-name';
   readonly priceInput = '#add-price';
@@ -10,6 +12,7 @@ export class RestaurantMenuPage extends BasePage {
   readonly addItemButton = 'button:has-text("Add Item")';
   readonly menuRows = 'table tr';
   readonly validationMessage = 'p';
+  readonly searchMenuItemInput = '#search-box';
 
   constructor(page: Page) {
     super(page);
