@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// @ts-check
+
 /**
  * Playwright configuration
  * See https://playwright.dev/docs/test-configuration for more options
