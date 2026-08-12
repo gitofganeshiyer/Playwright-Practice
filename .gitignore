@@ -2,3 +2,12 @@
 screenshots/
 test-results/
 playwright-report/
+.md
+.docx
+.py
+.log
+.yml
+.vscode/mcp.json
+node_modules/.package-lock.json
+package-lock.json
+package.json
