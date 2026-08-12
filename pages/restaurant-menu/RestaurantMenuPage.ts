@@ -49,9 +49,8 @@ export class RestaurantMenuPage extends BasePage {
   }
 
   async resetForm(): Promise<void> {
-    await this.page.locator(this.nameInput).fill('');
-    await this.page.locator(this.priceInput).fill('');
-    await this.page.locator(this.ingredientsInput).fill('');
+    await this.page.locator(this.resetMenuItem).click({ timeout: 10000 });
+ 
   }
 
   async addMenuItem(name: string, price: string, ingredients: string): Promise<void> {
