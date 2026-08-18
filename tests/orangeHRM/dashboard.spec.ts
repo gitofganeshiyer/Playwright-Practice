@@ -5,8 +5,11 @@ import { TEST_CREDENTIALS } from '../../config/testConfig';
 
 test.describe('OrangeHRM Dashboard', () => {
   test('dashboard displays its expected widgets', async ({ dashboardPage, loginPage}) => { 
-
-    await loginPage.login(TEST_CREDENTIALS.username, TEST_CREDENTIALS.password);
+        await loginPage.navigateToLoginPage();
+        await loginPage.login(TEST_CREDENTIALS.username, TEST_CREDENTIALS.password);
+        await dashboardPage.waitForDashboard();      
+        await expect(dashboardPage.pageHeading).toHaveText('Dashboard');
+        await expect(dashboardPage.navigationLinks.first()).toBeVisible();
     for (const widgetName of [
       'Time at Work',
       'My Actions',
@@ -21,10 +24,9 @@ test.describe('OrangeHRM Dashboard', () => {
     await expect(dashboardPage.widget('Quick Launch').getByRole('button')).toHaveCount(6);
   });
 
-  test('navigation search filters and restores menu items', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    const dashboardPage = new DashboardPage(page);
-
+  test('navigation search filters and restores menu items', async ({ dashboardPage, loginPage }) => {
+   
+    await loginPage.navigateToLoginPage();
     await loginPage.login(TEST_CREDENTIALS.username, TEST_CREDENTIALS.password);
     await dashboardPage.searchNavigation('Leave');
 
