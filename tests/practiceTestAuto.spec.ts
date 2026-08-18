@@ -6,7 +6,7 @@ test.describe('Practice Test Automation - End to End Flow', () => {
     try{
 
         testInfo.title = 'Practice Test Automation - End to End Flow';
-        test.step("step1 : Login to the application", async () => { 
+        await test.step("step1 : Login to the application", async () => { 
           await page.goto('https://practicetestautomation.com/practice-test-login/');
 
           await page.getByRole('textbox', { name: 'Username' }).fill('student');
@@ -23,7 +23,7 @@ test.describe('Practice Test Automation - End to End Flow', () => {
         });
 
         // 2. Click on Blog menu and capture the title of first blog post
-        test.step("step2 : Capture the title of first blog post", async () => {
+        await test.step("step2 : Capture the title of first blog post", async () => {
           await page.getByRole('link', { name: 'Blog' }).click();
           const firstBlogTitleLocator = page.locator(
             'article h1, article h2, article h3, .entry-title, .post-title'
@@ -39,9 +39,9 @@ test.describe('Practice Test Automation - End to End Flow', () => {
         });
 
         // 3. Click on Practice Menu item and validate header text
-        test.step("step3 : Validate practice header", async () => {
+        await test.step("step3 : Validate practice header", async () => {
           await page.locator('div[id="menu-primary"] > * > * >li:nth-child(2)').click();
-          await page.waitForLoadState('networkidle', { timeout: 15000 });
+          await page.waitForLoadState('domcontentloaded');
           await expect(page.locator('h1')).toHaveText(/Practice/i);
           await testInfo.attach('step-3-practice-header', {
             body: await page.screenshot(),
@@ -51,7 +51,7 @@ test.describe('Practice Test Automation - End to End Flow', () => {
       
 
         // 4. Click on Test Table link and validate the Header and check if Filters are available
-        test.step("step4 : Validate test table header and filters", async () => {  
+        await test.step("step4 : Validate test table header and filters", async () => {  
           await page.getByRole('link', { name: 'Test Table' }).click();
           await expect(page.locator('h1')).toHaveText(/Test Table/i);
           await expect(page.getByText(/filter/i).first()).toBeVisible();
@@ -62,7 +62,7 @@ test.describe('Practice Test Automation - End to End Flow', () => {
         });
 
         // 5. Click on Home menu link and check if the header text is Hello
-        test.step("step5 : Validate home header", async () => {
+        await test.step("step5 : Validate home header", async () => {
           await page.getByRole('link', { name: 'Home' }).click();
           await expect(page.locator('h1')).toHaveText(/Hello/i);      
           await testInfo.attach('step-5-home-header', {
@@ -81,8 +81,6 @@ test.describe('Practice Test Automation - End to End Flow', () => {
     }
    }); 
 
-  test.afterAll(async ( { page }) => {
-    await page.close();
-  });
+
 });
  
