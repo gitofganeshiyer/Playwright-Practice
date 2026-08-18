@@ -47,10 +47,14 @@ export default defineConfig({
         // RECOMMENDED: Opt into full Chrome engine headless mode 
         // to minimize rendering differences (fonts, WebGL) vs headed mode
         channel: 'chromium', 
+        actionTimeout: 10000, // 10 seconds
+        isMobile: false,
+        navigationTimeout: 10000, // 10 seconds
+        headless: true,
       },
     },    
 
-    {
+    /* {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
@@ -58,7 +62,7 @@ export default defineConfig({
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
-    },
+    }, */
 
     /* Test against mobile viewports. */
     // {

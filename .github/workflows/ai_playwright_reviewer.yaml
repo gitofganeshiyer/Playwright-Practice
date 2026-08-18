@@ -3,7 +3,7 @@ name: AI Agent Playwright Reviewer
 on:
   pull_request:
     branches:
-      - main
+      - master
     paths:
       - '**/tests/**'          # Only trigger when test folders change
       - '**/*test*.ts'        # Match common test filename naming patterns

@@ -6,7 +6,7 @@ import { Page } from '@playwright/test';
  */
 export class BasePage {
   protected page: Page;
-  readonly baseURL = 'https://opensource-demo.orangehrmlive.com/web/index.php';
+  readonly baseURL = process.env.BASE_URL || 'https://opensource-demo.orangehrmlive.com/web/index.php';
 
   constructor(page: Page) {
     this.page = page;
@@ -28,8 +28,9 @@ export class BasePage {
    * Navigate to the home page
    */
   async navigateToHome(): Promise<void> {
-
     await this.navigateTo(`${this.baseURL}/auth/login`);
+    await this.page.waitForLoadState('networkidle', { timeout: 10000 });
+    await this.page.waitForLoadState('domcontentloaded', { timeout: 10000 });    // Additional wait to ensure page is fully loaded
   }
 
   /**
