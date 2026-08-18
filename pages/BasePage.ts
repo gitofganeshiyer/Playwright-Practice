@@ -6,7 +6,7 @@ import { Page } from '@playwright/test';
  */
 export class BasePage {
   protected page: Page;
-  readonly baseURL = 'https://opensource-demo.orangehrmlive.com/web/index.php';
+  readonly baseURL = process.env.BASE_URL || 'https://opensource-demo.orangehrmlive.com/web/index.php';
 
   constructor(page: Page) {
     this.page = page;
