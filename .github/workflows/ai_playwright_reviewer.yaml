@@ -1,0 +1,81 @@
+name: AI Agent Playwright Reviewer
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**/tests/**'          # Only trigger when test folders change
+      - '**/*test*.ts'        # Match common test filename naming patterns
+
+permissions:
+  contents: write             # Required to commit fixes back to the branch
+  pull-requests: write        # Required to add labels and PR comments
+
+jobs:
+  review-and-patch:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Check out the specific Pull Request branch
+      - name: Checkout PR Branch
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      # 2. Extract only the relevant file diffs to keep tokens minimal
+      - name: Generate Playwright Diff Context
+        id: git-diff
+        run: |
+          git fetch origin main
+          # Fetch the clean diff against the target main branch
+          git diff origin/main...HEAD -- '**/tests/*' '*test*.ts' > playwright_changes.diff
+          echo "DIFF_PATH=playwright_changes.diff" >> $GITHUB_ENV
+
+      # 3. Setup Environment Configuration
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install System Dependencies
+        run: |
+          pip install pydantic-ai openai dataclasses
+
+      # 4. Run the PydanticAI Agent script
+      - name: Execute PydanticAI Agent Workflow
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DIFF_FILE: ${{ env.DIFF_PATH }}
+        run: |
+          # Pass the diff path into your script via terminal commands or files
+          python generated/review_workflow.py
+
+      # 5. Automatically Commit Suggested Fixes to the PR branch
+      - name: Commit and Push Suggested Fixes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add .
+          # Check if there are actual code improvements before committing
+          if ! git diff --staged --quiet; then
+            git commit -m "style(qa): automated optimizations by AI Agent Reviewer"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          else
+            echo "No brittle Playwright patterns found. Branch is optimal."
+          fi
+
+      # 6. Apply the 'AI Agent Reviewer' Label
+      - name: Tag PR with AI Agent Reviewer Label
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['AI Agent Reviewer']
+            })
