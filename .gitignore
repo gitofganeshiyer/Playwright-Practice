@@ -11,3 +11,9 @@ playwright-report/
 node_modules/.package-lock.json
 package-lock.json
 package.json
+
+# Playwright
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

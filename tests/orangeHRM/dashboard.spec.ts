@@ -1,6 +1,4 @@
 import { expect, test } from '../../fixtures/pagefixtureOrangeCRM';
-import { DashboardPage } from '../../pages/DashboardPage';
-import { LoginPage } from '../../pages/LoginPage';
 import { TEST_CREDENTIALS } from '../../config/testConfig';
 
 test.describe('OrangeHRM Dashboard', () => {
