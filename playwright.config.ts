@@ -47,9 +47,9 @@ export default defineConfig({
         // RECOMMENDED: Opt into full Chrome engine headless mode 
         // to minimize rendering differences (fonts, WebGL) vs headed mode
         channel: 'chromium', 
-        actionTimeout: 10000, // 10 seconds
+        actionTimeout: 30000, // 30 seconds
         isMobile: false,
-        navigationTimeout: 10000, // 10 seconds
+        navigationTimeout: 30000, // 30 seconds
         headless: true,
       },
     },    

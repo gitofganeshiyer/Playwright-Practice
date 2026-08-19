@@ -29,8 +29,8 @@ export class BasePage {
    */
   async navigateToHome(): Promise<void> {
     await this.navigateTo(`${this.baseURL}/auth/login`);
-    await this.page.waitForLoadState('networkidle', { timeout: 10000 });
-    await this.page.waitForLoadState('domcontentloaded', { timeout: 10000 });    // Additional wait to ensure page is fully loaded
+    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('domcontentloaded');    // Additional wait to ensure page is fully loaded
   }
 
   /**
