@@ -6,6 +6,9 @@
 export const TEST_CREDENTIALS = {
   username: 'admin',
   password: 'admin123',
+
+  wrongusername: 'wronguser',
+  wrongpassword: 'wrongpass',
 };
 
 // Test URLs
